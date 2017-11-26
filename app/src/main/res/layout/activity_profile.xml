@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a2017_09_13.sapi_news_2017.ProfileActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pprofile_image"
+        android:layout_centerHorizontal="true"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/profil"
+        android:layout_marginTop="13dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbadvertisment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:text="My Advertisments"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name:"
+        android:layout_marginTop="220dp"
+        android:layout_marginLeft="53dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name:"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="53dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Address:"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number:"
+        android:layout_marginTop="340dp"
+        android:layout_marginLeft="25dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password:"
+        android:layout_marginTop="380dp"
+        android:layout_marginLeft="62dp"
+        android:textSize="16sp"/>
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ptvfNmae"
+        android:text="Elemer"
+        android:layout_marginTop="220dp"
+        android:layout_marginLeft="150dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ptvlName"
+        android:text="Kiss"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="150dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ptvemail_address"
+        android:text="kise@yahoo.com"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="150dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ptvphone_number"
+        android:text="0740745654"
+        android:layout_marginTop="340dp"
+        android:layout_marginLeft="150dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ptvpassword"
+        android:text="kise123456789"
+        android:layout_marginTop="380dp"
+        android:layout_marginLeft="150dp"
+        android:textSize="16sp"/>
+
+
+
+
+</RelativeLayout>

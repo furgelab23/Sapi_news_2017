@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "11155594964",
+    "firebase_url": "https://sapi-news-2017.firebaseio.com",
+    "project_id": "sapi-news-2017",
+    "storage_bucket": "sapi-news-2017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11155594964:android:9b30dec4fe5b7f89",
+        "android_client_info": {
+          "package_name": "com.example.a2017_09_13.sapi_news_2017"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11155594964-pegiv5dsd4qt8e1t7k6ftart12p516ck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.a2017_09_13.sapi_news_2017",
+            "certificate_hash": "eff2265f9a58d2988672cf5c0f5f62d32413cfa7"
+          }
+        },
+        {
+          "client_id": "11155594964-7qo6s7nqqkk4q16d73tqeddhik1b9ski.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSQE1f3eJrA7-zR3m6YChyZQFExKjR7K0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11155594964-7qo6s7nqqkk4q16d73tqeddhik1b9ski.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
