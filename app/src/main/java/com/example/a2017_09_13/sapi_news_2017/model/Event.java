@@ -1,7 +1,9 @@
 package com.example.a2017_09_13.sapi_news_2017.model;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
@@ -39,11 +41,12 @@ public class Event implements Parcelable {
     public Event() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     protected Event(Parcel in) {
         title = in.readString();
         description = in.readString();
         uId = in.readString();
-        coordinate = in.readParcelable(Coordinate.class.getClassLoader());
+        coordinate = in.readTypedObject(Coordinate.CREATOR);
         pictures = in.createTypedArrayList(Picture.CREATOR);//infok atrakasa // osszesurites
     }
 
@@ -99,5 +102,16 @@ public class Event implements Parcelable {
         parcel.writeString(uId);
         parcel.writeTypedList(pictures);
         parcel.writeParcelable(coordinate, 0);
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", uId='" + uId + '\'' +
+                ", coordinate=" + coordinate +
+                ", pictures=" + pictures +
+                '}';
     }
 }

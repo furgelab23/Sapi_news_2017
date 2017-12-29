@@ -1,17 +1,33 @@
 package com.example.a2017_09_13.sapi_news_2017;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a2017_09_13.sapi_news_2017.model.User;
+import com.example.a2017_09_13.sapi_news_2017.permissions.permissions;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,6 +46,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class LoginActivity extends AppCompatActivity {
     private final static String TAG = "Login: ";
     private FirebaseDatabase mFirebaseInstance;
@@ -42,12 +61,27 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton mGoogleButton;
     private GoogleSignInClient googleSignInClient;
     private View.OnClickListener buttonListener;
+    private TextView tv;
+    //facebook
+    CallbackManager callbackManager;
+    LoginButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);//erre a activityre ra kapcsolja ezt a viewt hozza rendeli
+
+        //jogosultsag keres
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissions.permissionRequest(this, permissions.permissions, permissions.PERMISSION_KEY);
+        }
+
 
 
         buttonListener = new View.OnClickListener() {
@@ -66,25 +100,30 @@ public class LoginActivity extends AppCompatActivity {
                     case R.id.googleButton:
                         googleSignIn();
                         break;
+                    case R.id.tv_forgot:
+                        Intent i2 = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                        startActivity(i2);
+                        break;
+
                     default:
                         break;
                 }
             }
         };
-        /*User user;
-        user = new User.Builder()
-                .firstname("Csirke")
-                .lastname("Csirke 2")
-                .emailaddress("anyadpisakja@szopdleannamari.anyad")
-                .password("NEMOTOM")
-                .telephone("0987654321")
-                .bulid();*/
         mEmailField = findViewById(R.id.emailEditText);
         mPasswordField = findViewById(R.id.passwordEditText);
         mSignInButton = findViewById(R.id.loginButton);
         mRegisterButton = findViewById(R.id.registerButton);
         mGoogleButton = findViewById(R.id.googleButton);
+        tv = findViewById(R.id.tv_forgot);
 
+        //facebook
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = findViewById(R.id.login_button);
+
+        loginWithFB();//facebook belepes
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -97,14 +136,14 @@ public class LoginActivity extends AppCompatActivity {
         mSignInButton.setOnClickListener(buttonListener);
         mRegisterButton.setOnClickListener(buttonListener);
         mGoogleButton.setOnClickListener(buttonListener);
-
+        tv.setOnClickListener(buttonListener);
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         mFirebaseInstance = FirebaseDatabase.getInstance();
-        // mFirebaseInstance.setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();//azt az egy referenciat a singleton osztalyra ,ezzel ferek hozza userhez ...
         mDatabaseReference = mFirebaseInstance.getReference();//ezt kell hasznali ha az adatbazist akarom hasznalni
 
@@ -127,7 +166,10 @@ public class LoginActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 e.printStackTrace();
             }
+        }else{
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
@@ -213,6 +255,36 @@ public class LoginActivity extends AppCompatActivity {
         userDatabaseReference.child("emailAddress").setValue(acct.getEmail());//emailcim
         userDatabaseReference.child("lastName").setValue(acct.getFamilyName());//vezeteknev
         userDatabaseReference.child("firstName").setValue(acct.getGivenName());//keresztnev
+        userDatabaseReference.child("phoneNumber").setValue(user.getPhoneNumber());//phone
 
     }
+
+
+
+    private void loginWithFB(){
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                Intent i = new Intent(LoginActivity.this,EventActivity.class);
+                startActivity(i);
+                Toast.makeText(getApplicationContext(), "Sign In success= "+loginResult,
+                        Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "Sign In Failed",
+                        Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), "Error= "+error,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
 }

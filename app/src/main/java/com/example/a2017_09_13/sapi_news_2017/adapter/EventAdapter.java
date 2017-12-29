@@ -41,6 +41,11 @@ public class  EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHo
         this.eventSelectionListener = eventSelectionListener;
     }
 
+    public void addData(List<Event> event){
+        this.events = event;
+        notifyDataSetChanged();
+    }
+
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_list, parent, false);
@@ -54,9 +59,6 @@ public class  EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHo
        holder.viewdescription.setText(event.getDescription());
        //Sikerult Glidenak a teljes funkcionalitasat el erjem igy tudsz placeholdereket tenni es transzformaciokat vegezni
         //placeholder egy placeholder kepet tolt be
-        //GlideApp.with(holder.itemView.getContext()) //kontextus
-         //       .load("https://c.wallhere.com/photos/93/da/1920x1080_px_forest_nature_path_Trees-518200.jpg!d")//mit
-         //       .into(holder.viewImage);//hova
         storageReference.child("teso.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -78,6 +80,10 @@ public class  EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHo
     @Override
     public int getItemCount() {
         return events.size();//hogy tudja , hogy hany viewt kezeljen generaljon ki
+    }
+
+    public void updateData(ArrayList<Event> eventsList) {
+        this.events = eventsList;
     }
 
     class EventViewHolder extends RecyclerView.ViewHolder {

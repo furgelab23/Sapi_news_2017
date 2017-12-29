@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,12 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="Title"
+            android:textColor="@color/feher"
             android:textSize="36sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:textColor="@color/feher"
             android:text="Description"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -33,10 +36,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:textColor="@color/feher"
             android:text="no_descriptions"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/contentmap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            tools:context="com.example.a2017_09_13.sapi_news_2017.MapsActivity" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -60,6 +72,7 @@
                 android:layout_toEndOf="@+id/cprofile_image"
                 android:layout_margin="16dp"
                 android:layout_centerVertical="true"
+                android:textColor="@color/feher"
                 android:text="phone_number_los"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
@@ -68,3 +81,4 @@
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
+

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-
+    android:background="@drawable/szurek_hatter"
     >
 
     <TextView
@@ -9,8 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:textSize="30sp"
+        android:textSize="40sp"
+
         android:text="Sapi News 2017"
+        android:textColor="@color/feher"
+        android:layout_marginTop="45dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:id="@+id/textView" />
 
@@ -19,6 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/emailTextView"
         android:text="Email:"
+        android:textColor="@color/feher"
         android:layout_marginTop="160dp"
         android:layout_marginLeft="15dp"
         android:textSize="20sp"/>
@@ -26,23 +30,28 @@
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="227dp"
+        android:textColorHint="@color/feher"
+        android:textColor="@color/feher"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:hint="emailaddress" />
+        android:hint="emailAddress" />
 
     <TextView
         android:id="@+id/passwordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="215dp"
+        android:textColor="@color/feher"
         android:textSize="15sp"
         android:text="Password:" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:inputType="textPassword"
+        android:textColor="@color/feher"
+        android:textColorHint="@color/feher"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -72,6 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="350dp"
+        android:textColor="@color/piros"
         android:text="Forgot your password?"
         android:textSize="15sp"
         />
@@ -84,5 +94,13 @@
         android:layout_marginTop="370dp"
         >
     </com.google.android.gms.common.SignInButton>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="440dp"
+        />
 
 </RelativeLayout>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.a2017_09_13.sapi_news_2017.RegisterActivity">
+    tools:context="com.example.a2017_09_13.sapi_news_2017.RegisterActivity"
+    android:background="@drawable/szurek_hatter">
     <LinearLayout
         android:id="@+id/loginlinear"
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Register"
+            android:textColor="@color/feher"
             android:textSize="30sp" />
 
         <EditText
@@ -32,21 +34,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:hint="First name" />
+            android:hint="First name"
+            android:textColorHint="@color/feher"/>
         <EditText
             android:id="@+id/et_lName"
             android:layout_width="227dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:hint="Last name" />
+            android:hint="Last name"
+            android:textColorHint="@color/feher"/>
         <EditText
             android:id="@+id/et_email"
             android:layout_width="227dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
-            android:hint="Email" />
+            android:hint="Email"
+            android:textColorHint="@color/feher"/>
 
         <EditText
             android:id="@+id/et_password"
@@ -55,7 +61,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:inputType="textPassword"
-            android:hint="Password" />
+            android:hint="Password"
+            android:textColorHint="@color/feher"/>
 
         <EditText
             android:id="@+id/et_phonenumber"
@@ -63,7 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:hint="phonenumber" />
+            android:hint="phonenumber"
+            android:textColorHint="@color/feher"/>
 
         <Button
             android:id="@+id/btn_register"

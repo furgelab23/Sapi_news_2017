@@ -6,60 +6,54 @@ package com.example.a2017_09_13.sapi_news_2017.model;
 
 public class User {
 
-    String firstname;
-    String lastname;
-    String emailaddress;
-    String password;
-    String telephone;
+    String firstName;
+    String lastName;
+    String emailAddress;
+    //    String password;
+    String phoneNumber;
 
-    public User(String userId, String email) {
+    public User() {
     }
 
-    public User(String firstname, String lastname, String emailaddress, String password, String telephone) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.emailaddress = emailaddress;
-        this.password = password;
-        this.telephone = telephone;
+    public User(String firstname, String lastname, String emailaddress, String telephone) {
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.emailAddress = emailaddress;
+        //this.password = password;
+        this.phoneNumber = telephone;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getEmailaddress() {
-        return emailaddress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmailaddress(String emailaddress) {
-        this.emailaddress = emailaddress;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getTelephone() {
-        return telephone;
-    }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
 }

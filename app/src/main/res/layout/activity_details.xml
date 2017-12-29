@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.a2017_09_13.sapi_news_2017.LoginActivity"
-    >
+    android:background="@drawable/szurek_hatter">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -25,8 +25,8 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-
     </android.support.design.widget.AppBarLayout>
+
 
     <include layout="@layout/content_details" />
 

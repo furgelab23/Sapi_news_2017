@@ -9,20 +9,20 @@ import android.os.Parcelable;
 
 public class Coordinate implements Parcelable {
 
-    String latitude;
-    String longitude;
+    Double latitude;
+    Double longitude;
 
     public Coordinate() {
     }
 
-    public Coordinate(String latitude, String longitude) {
+    public Coordinate(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     protected Coordinate(Parcel in) {
-        latitude = in.readString();
-        longitude = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
     public static final Creator<Coordinate> CREATOR = new Creator<Coordinate>() {
@@ -37,19 +37,19 @@ public class Coordinate implements Parcelable {
         }
     };
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -60,7 +60,7 @@ public class Coordinate implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(latitude);
-        parcel.writeString(longitude);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
     }
 }
