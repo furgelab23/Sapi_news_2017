@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.ActivityCompat;
 
-/**
- * Created by 2017-09-13 on 12/17/2017.
- */
 
 public class permissions {
     public static final int PERMISSION_KEY = 254;

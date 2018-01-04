@@ -37,7 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 
-
+/**
+ * this serves as the emergence of events. Here user the cardView and recycleView
+ */
 public class EventActivity extends AppCompatActivity implements EventSelectionListener,NavigationView.OnNavigationItemSelectedListener {//,SearchView.OnQueryTextListener{
 
     //Making RecyclerView
@@ -59,13 +61,18 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
     ActionBarDrawerToggle mDrawerToggle;
 
 
+
     private DatabaseReference databaseReference;//ramutatunk ezzel egy cimre
 
-
+    /**
+     *
+     * @param savedInstanceState which is a Bundle object containing the activity's previously saved state.
+     *                           If theactivity has never existed before, the valu of the Bundle object is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);//activity_event,card_view_list//
+        setContentView(R.layout.activity_event);
         fillWithData(events);//feltolti adatokkal
         initRecyclerView();
         prepareSearchView();
@@ -94,6 +101,12 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
 
 
     //menu sor hozza adasa
+
+    /**
+     *
+     * @param menu this contains the menu.xml data
+     * @return (boolean) true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -105,6 +118,9 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
     }
 
 
+    /**
+     * when click the logout button this is called and the user is break.
+     */
     private void logOut() {
         FirebaseAuth.getInstance().signOut();
         Toast.makeText(getApplicationContext(), "Logged out of this session", Toast.LENGTH_SHORT)
@@ -112,13 +128,16 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
         finish();
     }
 
+    /**
+     * Initialization the recycleView
+     */
     private void initRecyclerView() {
         //Recycler List
         recyclerView = findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(this);
 
 
-        adapter = new EventAdapter(events, this);
+        adapter = new EventAdapter(events,this);
 
         recyclerView.setHasFixedSize(true);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -130,12 +149,21 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
 
     }
 
+    /**
+     * Here query of event data .
+     * @param events this contains the data
+     */
     private void fillWithData(final ArrayList<Event> events) {
         databaseReference = FirebaseDatabase.getInstance().getReference();//ezzel ferunk hozza
         databaseReference.child("events").addValueEventListener(new ValueEventListener() {
+            /**
+             * Here query of data create on dataSnaphot .
+             * @param dataSnapshot here are the data looking for
+             */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //ez csinal egy masolatot es itt toltom le az adatokat
+                events.clear();
                 for (DataSnapshot iter : dataSnapshot.getChildren()) {
                     Event event = iter.getValue(Event.class);
                     events.add(event);
@@ -143,6 +171,10 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
                 adapter.notifyDataSetChanged();//megnezi , hogy mi valtozott s beteszi ha valtozas tortent
             }
 
+            /**
+             * when is the error this call
+             * @param databaseError
+             */
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 //ha nem sikerul az adat lekerdezes
@@ -151,6 +183,12 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
         });
     }
 
+    /**
+     * this is the responsiblility of the data wrapping
+     * @param event
+     * @param uri this the picture and this send DetailsActivity(makeSceneTransmititionAnimation)
+     * @param view
+     */
     @Override
     public void onEventClicked(Event event, Uri uri, View view) {
         Bundle bundle = new Bundle();
@@ -159,10 +197,14 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
         ActivityOptionsCompat options = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this, view,
                         "transition_key");
-        startActivity(new Intent(this, DetailsActivity.class).putExtras(bundle), options.toBundle());//hol s mit jelenitsen meg
-
+        startActivity(new Intent(this,
+                DetailsActivity.class).putExtras(bundle),
+                options.toBundle());//hol s mit jelenitsen meg
     }
 
+    /**
+     * this responsibile wherefore that the user no break out one clik
+     */
     @Override
     public void onBackPressed() {
         if (isPressed) {
@@ -180,6 +222,10 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
     }
 
 
+    /**
+     * this is the search
+     * this help the date search
+     */
     private void prepareSearchView() {
         materialSearchView = findViewById(R.id.material_search_view);
         materialSearchView.setCloseIcon(getResources().getDrawable(R.drawable.ic_clear_black_24dp, getTheme()));
@@ -190,6 +236,11 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
                 return false;
             }
 
+            /**
+             * search on event
+             * @param newText search for the text you typed
+             * @return one ArrayList this includes all events what he found
+             */
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText != null && !newText.isEmpty()) {
@@ -212,11 +263,17 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
         });
 
         materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            /**
+             *
+             */
             @Override
             public void onSearchViewShown() {
                 //Do some magic
             }
 
+            /**
+             *
+             */
             @Override
             public void onSearchViewClosed() {
                 //Do some magic
@@ -226,6 +283,11 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
         });
     }
 
+    /**
+     * it is here that the navigationBar show choices and the user click one and starts the chain reaction
+     * @param item all menu item he see the xml and looking choices
+     * @return what you choose
+     */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -269,6 +331,10 @@ public class EventActivity extends AppCompatActivity implements EventSelectionLi
         return true;
     }
 
+    /**
+     *
+     * @param newConfig
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

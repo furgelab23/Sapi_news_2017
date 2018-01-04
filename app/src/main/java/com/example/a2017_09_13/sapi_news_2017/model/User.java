@@ -1,9 +1,9 @@
 package com.example.a2017_09_13.sapi_news_2017.model;
 
-/**
- * Created by 2017-09-13 on 11/10/2017.
- */
 
+/**
+ * The database user model.
+ */
 public class User {
 
     String firstName;
@@ -54,6 +54,4 @@ public class User {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-
 }

@@ -16,11 +16,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * this activity help me about that change the password when I forgot.
+ */
 public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText mEmailField;
     private FirebaseAuth mAuth;
 
+    /**
+     *
+     * @param savedInstanceState which is a Bundle object containing the activity's previously saved state.
+     *                           If theactivity has never existed before, the valu of the Bundle object is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +43,10 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         mAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * on click listener here getText(email) verificate form is not empty
+     * @param v this include my choice
+     */
     @Override
     public void onClick(View v) {
 

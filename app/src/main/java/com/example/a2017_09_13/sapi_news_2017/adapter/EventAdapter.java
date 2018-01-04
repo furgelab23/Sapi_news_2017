@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.a2017_09_13.sapi_news_2017.MyEvenetsActivity;
 import com.example.a2017_09_13.sapi_news_2017.R;
 import com.example.a2017_09_13.sapi_news_2017.image.GlideApp;
 import com.example.a2017_09_13.sapi_news_2017.interfaces.EventSelectionListener;
@@ -24,9 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 2017-09-13 on 11/10/2017.
+ * the adapter is used to bind a model data to a view(with in a viewHolder)
  */
-
 public class  EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder>{
 
     private List<Event> events = new ArrayList<>();
@@ -41,17 +41,29 @@ public class  EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHo
         this.eventSelectionListener = eventSelectionListener;
     }
 
+
     public void addData(List<Event> event){
         this.events = event;
         notifyDataSetChanged();
     }
 
+    /**
+     * Included view to which we attach data
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_list, parent, false);
         return new EventViewHolder(itemView);
     }
 
+    /**
+     * Help the photo attack the view
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final EventViewHolder holder, int position) {
        final Event event = events.get(position);
@@ -77,6 +89,10 @@ public class  EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHo
         });
     }
 
+    /**
+     *
+     * @return events size that know ,that how view handled/generate out
+     */
     @Override
     public int getItemCount() {
         return events.size();//hogy tudja , hogy hany viewt kezeljen generaljon ki

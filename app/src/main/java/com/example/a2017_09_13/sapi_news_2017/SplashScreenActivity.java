@@ -12,8 +12,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * This Activity responsible the splash Screen . Here show the little animation .
+ */
 public class SplashScreenActivity extends AppCompatActivity {
 
+    /**
+     *
+     */
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();
@@ -22,12 +28,21 @@ public class SplashScreenActivity extends AppCompatActivity {
     /** Called when the activity is first created. */
 
 
+    /**
+     *
+     * @param savedInstanceState which is a Bundle object containing the activity's previously saved state.
+     *                           If theactivity has never existed before, the valu of the Bundle object is null.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         StartAnimations();
     }
+
+    /**
+     * Here start animation. The text from the side slip
+     * */
     private void StartAnimations() {
 
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);

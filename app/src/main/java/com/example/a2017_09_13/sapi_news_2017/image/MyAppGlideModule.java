@@ -8,10 +8,11 @@ import com.bumptech.glide.Registry;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
 
-/**
- * Created by 2017-09-13 on 11/11/2017.
- */
 //Needed for Glide to operate correctly
+
+/**
+ * this help Attaching the photo
+ */
 @GlideModule
 public final class MyAppGlideModule extends AppGlideModule {
     public MyAppGlideModule() {

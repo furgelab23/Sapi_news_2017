@@ -8,7 +8,7 @@ import android.support.annotation.RequiresApi;
 import java.util.ArrayList;
 
 /**
- * Created by 2017-09-13 on 11/10/2017.
+ *  The database event model.
  */
 
 public class Event implements Parcelable {

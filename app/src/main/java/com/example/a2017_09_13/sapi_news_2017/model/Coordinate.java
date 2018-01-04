@@ -3,10 +3,10 @@ package com.example.a2017_09_13.sapi_news_2017.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by 2017-09-13 on 11/10/2017.
- */
 
+/**
+ *  The database coordinate model.
+ */
 public class Coordinate implements Parcelable {
 
     Double latitude;

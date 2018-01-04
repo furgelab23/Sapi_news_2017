@@ -28,6 +28,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
+/**
+ * This class serves the purpose of creating an event.
+ */
 public class Add_EventActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText etitle,edescription;
@@ -38,10 +41,14 @@ public class Add_EventActivity extends AppCompatActivity implements View.OnClick
 
     // Create a storage reference from our app
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
     private static final int SELECTED_PICTURE = 1;
     private static final int RC_MAPS_COORDINATE_ADD = 123;
 
+    /**
+     *
+     * @param savedInstanceState which is a Bundle object containing the activity's previously saved state.
+     *                           If theactivity has never existed before, the valu of the Bundle object is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +70,15 @@ public class Add_EventActivity extends AppCompatActivity implements View.OnClick
     }
 
 
+    /**
+     * When the user is done with the subsequent activity and returns,the system calls your activity sonActivityResult() method.
+     * This method includes three arguments : The request code you passed to startActivityForResult();
+     * A result code specified by the second activity. This is either RESULT_OK if the operation was successful or  RESULT_CANCELED
+     * if the user backed out or the operation failed for some reason.
+     * @param requestCode what we give it will return to this.
+     * @param resultCode specify that it was successful or failed.
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -102,6 +118,10 @@ public class Add_EventActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    /**
+     * there it is the onClick event choice of options.
+     * @param v this decide when to call.
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

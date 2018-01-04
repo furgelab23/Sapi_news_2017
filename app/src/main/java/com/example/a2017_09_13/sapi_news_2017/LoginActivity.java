@@ -1,5 +1,8 @@
 package com.example.a2017_09_13.sapi_news_2017;
 
+import android.*;
+import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -49,6 +52,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * This departmentis responsibile for the login.
+ *  login as : Simple login, google login, facebook login and here is forgot password and registrate.
+ */
 public class LoginActivity extends AppCompatActivity {
     private final static String TAG = "Login: ";
     private FirebaseDatabase mFirebaseInstance;
@@ -58,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordField;//passwordEditText
     private Button mSignInButton;//loginButton
     private Button mRegisterButton;//RegisterButton
+    private Button manButton;
     private SignInButton mGoogleButton;
     private GoogleSignInClient googleSignInClient;
     private View.OnClickListener buttonListener;
@@ -66,23 +74,31 @@ public class LoginActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     LoginButton loginButton;
 
+    /**
+     *
+     *
+     * @param savedInstanceState which is a Bundle object containing the activity's previously saved state.
+     *                           If theactivity has never existed before, the valu of the Bundle object is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);//erre a activityre ra kapcsolja ezt a viewt hozza rendeli
 
+        /**
+         * Please ask permission from the user here.
+         */
         //jogosultsag keres
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.CALL_PHONE,
+                    android.Manifest.permission.INTERNET
+                    }, 1);
         }
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissions.permissionRequest(this, permissions.permissions, permissions.PERMISSION_KEY);
-        }
-
-
 
         buttonListener = new View.OnClickListener() {
             @Override
@@ -104,7 +120,10 @@ public class LoginActivity extends AppCompatActivity {
                         Intent i2 = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                         startActivity(i2);
                         break;
-
+                    case R.id.anButton:
+                        Intent i3 = new Intent(LoginActivity.this, AnonymousActivity.class);
+                        startActivity(i3);
+                        break;
                     default:
                         break;
                 }
@@ -116,11 +135,15 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterButton = findViewById(R.id.registerButton);
         mGoogleButton = findViewById(R.id.googleButton);
         tv = findViewById(R.id.tv_forgot);
+        manButton = findViewById(R.id.anButton);
 
         //facebook
         callbackManager = CallbackManager.Factory.create();
         loginButton = findViewById(R.id.login_button);
 
+        /**
+         * Facebook login call.
+         */
         loginWithFB();//facebook belepes
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,24 +160,39 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterButton.setOnClickListener(buttonListener);
         mGoogleButton.setOnClickListener(buttonListener);
         tv.setOnClickListener(buttonListener);
+        manButton.setOnClickListener(buttonListener);
     }
 
 
+    /**
+     * Initialization of data.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();//azt az egy referenciat a singleton osztalyra ,ezzel ferek hozza userhez ...
         mDatabaseReference = mFirebaseInstance.getReference();//ezt kell hasznali ha az adatbazist akarom hasznalni
-
     }
 
+    /**
+     * Here please let me down the data of user.
+     */
     //google login
     private void googleSignIn() {
         Intent signinintent = googleSignInClient.getSignInIntent();
         startActivityForResult(signinintent, 1);
     }
 
+    /**
+     * When the user is done with the subsequent activity and returns,the system calls your activity sonActivityResult() method.
+     * This method includes three arguments : The request code you passed to startActivityForResult();
+     * A result code specified by the second activity. This is either RESULT_OK if the operation was successful or  RESULT_CANCELED
+     * if the user backed out or the operation failed for some reason.
+     * @param requestCode what we give it will return to this.
+     * @param resultCode specify that it was successful or failed.
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,6 +210,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param acct
+     */
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -181,11 +223,9 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             writeNewGoogleUser(user, acct);
-
                             //userDatabaseReference.child(user.getUid()).child("phonenumber").setValue(user.getPhoneNumber());//telefonszam
                             //Ennel a sornal az tortenik , hogy mikor sikeresen belep a user akkor megjeleniti az esemenyeket
                             onAuthSuccess();
-
                         } else {
                             Toast.makeText(getApplicationContext(), "Sign In Google Failed",
                                     Toast.LENGTH_SHORT).show();
@@ -194,6 +234,10 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * There it is first step is validate check that form is good.
+     * Second step check the user on database and when no yet create one.
+     */
     ///eddig tart a google login
     private void signIn() {
         //Log.d(TAG, "signIn");
@@ -222,6 +266,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * There it is the intent EventActivity when google login is successful.
+     */
     private void onAuthSuccess() {
         Toast.makeText(getApplicationContext(), "Sign in succesful",
                 Toast.LENGTH_SHORT).show();
@@ -230,7 +277,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), EventActivity.class));//ebbol ebbe
     }
 
-
+    /**
+     * Here it is the validate of data.
+     * @return is boolean when form is good return true when form is failed the return values is false
+     */
     private boolean validateForm() {
         boolean result = true;
         if (TextUtils.isEmpty(mEmailField.getText().toString())) {
@@ -250,6 +300,11 @@ public class LoginActivity extends AppCompatActivity {
         return result;
     }
 
+    /**
+     * here create and write firebase new user
+     * @param user this paratmeter help the query of data
+     * @param acct this parameter help the query of data the address google
+     */
     private void writeNewGoogleUser(FirebaseUser user, GoogleSignInAccount acct) {
         DatabaseReference userDatabaseReference = mDatabaseReference.child("users").child(user.getUid());
         userDatabaseReference.child("emailAddress").setValue(acct.getEmail());//emailcim
@@ -260,24 +315,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Facebook login here request off the user data
+     */
     private void loginWithFB(){
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            /**
+             *
+             * @param loginResult there it is the user data
+             */
             @Override
             public void onSuccess(LoginResult loginResult) {
-
                 Intent i = new Intent(LoginActivity.this,EventActivity.class);
                 startActivity(i);
                 Toast.makeText(getApplicationContext(), "Sign In success= "+loginResult,
                         Toast.LENGTH_LONG).show();
             }
 
+            /**
+             * when is the problem this is called
+             */
             @Override
             public void onCancel() {
                 Toast.makeText(getApplicationContext(), "Sign In Failed",
                         Toast.LENGTH_LONG).show();
             }
 
+            /**
+             * when is the error this is called
+             * @param error this is the refund value
+             */
             @Override
             public void onError(FacebookException error) {
                 Toast.makeText(getApplicationContext(), "Error= "+error,
@@ -285,6 +352,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

@@ -33,6 +33,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginLeft="100dp"
         android:hint="Title"
+        android:textColor="@color/feher"
         android:textColorHint="@color/feher"/>
 
     <TextView
@@ -51,6 +52,7 @@
         android:layout_marginTop="135dp"
         android:layout_marginLeft="110dp"
         android:hint="Description"
+        android:textColor="@color/feher"
         android:textColorHint="@color/feher"
         />
 

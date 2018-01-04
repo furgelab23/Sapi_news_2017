@@ -4,9 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by 2017-09-13 on 11/24/2017.
+ *  The database picture model.
  */
-
 public class Picture implements Parcelable {
 
     String pictureId;

@@ -23,6 +23,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * This activity responsible of New user registrate(created).
+ */
 public class RegisterActivity extends AppCompatActivity{
 
     private final static String TAG = "Register: ";
@@ -34,12 +37,18 @@ public class RegisterActivity extends AppCompatActivity{
     private Button registerButton;
     private FirebaseAuth mAuth;
 
+    /**
+     *
+     * @param savedInstanceState which is a Bundle object containing the activity's previously saved state.
+     *                           If the activity has never existed before, the value of the Bundle object is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         //rakapcsolasok
+        //initializate data
         mFirstNameField = (EditText) findViewById(R.id.et_fName);
         mLastNameField = (EditText) findViewById(R.id.et_lName);
         mEmailField = (EditText) findViewById(R.id.et_email);
@@ -61,6 +70,16 @@ public class RegisterActivity extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * this function responsible the registrate(new user created)
+     * when the user type the date this function called and here verificate the correct this form
+     * and the form is correct not problem create new user
+     * @param firstName
+     * @param lastName
+     * @param email
+     * @param password
+     * @param phoneNumber
+     */
     private void register(final String firstName, final String lastName, final String email, final String password, final String phoneNumber) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
@@ -115,6 +134,10 @@ public class RegisterActivity extends AppCompatActivity{
                 );
     }
 
+    /**
+     * validate the paces is not empty
+     * @return if successful true else false if has error
+     */
     private boolean validateForm() {
         boolean valid = true;
 
